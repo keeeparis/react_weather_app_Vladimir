@@ -1,7 +1,7 @@
 import 'materialize-css'
 import Navbar from "./components/navbar/Navbar";
 import { BrowserRouter } from 'react-router-dom'
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import ApiRequest from "./API/ApiRequest";
 import List from "./components/List";
 import Form from './components/Form'
@@ -15,10 +15,11 @@ function App() {
 
     const submitForm = async (e) => {
         e.preventDefault()
-        setError(null)
         try {
             const data = await ApiRequest.getData(city)
-            const isInCards = cards.filter(e => e.city === data.location.name).length
+            const isInCards = cards.filter(e => 
+                e.lat === data.location.lat && e.lon === data.location.lon
+            ).length
 
             if (!!isInCards) {
                 setError('Город уже в списке')
@@ -29,6 +30,8 @@ function App() {
                 ...cards, 
                 {
                     city: data.location.name, 
+                    lat: data.location.lat,
+                    lon: data.location.lon,
                     temp: data.current.temp_c,
                     tempFL: data.current.feelslike_c,
                     icon: data.current.condition.icon,
@@ -48,11 +51,8 @@ function App() {
 
     useEffect(() => {
         message(error)
-    }, [error, message])
-
-    useMemo(() => {
-        return cards
-    }, [cards])
+        setError(null)
+    }, [error, message, setError])
 
     const remove = (cardCity) => {
         setCards(cards.filter(e => e.city !== cardCity))
