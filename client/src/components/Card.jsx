@@ -11,8 +11,7 @@ export default function Card({city, temp, tempFL, icon, humid, wind, localTime, 
     return (
         <div className='cityCard'>
             <div style={{display: 'flex', alignItems: 'baseline'}}>
-                <h4>{city},</h4>
-                <p style={{fontSize:'1.2em', color: '#383838', paddingLeft:'5px'}}>{country}</p>
+                <h4>{city}</h4>
             </div>
             <p>{new Date(localTime).toLocaleString('en-GB')}</p>
             <div style={{display: 'flex', justifyContent:'space-between', alignItems: 'center'}}>
