@@ -55,10 +55,10 @@ function App() {
     }, [error, message, setError])
 
     useMemo(async () => {
-        const response = await fetch( `https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=hOx1xpIrCP70JtJChd0PD_eY13XuFsnir7X5yk6k7OU&query=${city}&maxresults=10` )
-        const result = await response.json()
-        const filteredResult = result.suggestions?.filter(el => 'city' in el.address)
-        setSuggestions(filteredResult)
+        const result = await ApiRequest.getSuggestions(city)
+        setSuggestions(result.suggestions)
+        // const filteredResult = result.suggestions?.filter(el => 'city' in el.address)
+        // setSuggestions(filteredResult)
     }, [city])
 
     const remove = (cardCity) => {

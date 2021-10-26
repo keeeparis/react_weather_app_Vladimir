@@ -32,6 +32,30 @@ app.post('/api/data', async (req, res) => {
     }
 })
 
+app.post('/api/coords', async (req, res) => {
+    const apiKey = config.get('apiKeyOpenCageData')
+    const {city} = req.body
+    try {
+        const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${apiKey}`)
+        const result = await response.json()
+        res.send(result)
+    } catch (e) {
+        res.status(404).send({message: 'Возникла ошибка с сервисом openCageData.'})
+    }
+})
+
+app.post('/api/suggestions', async (req, res) => {
+    const apiKey = config.get('apiKeyAutosuggest')
+    const {city} = req.body
+    try {
+        const response = await fetch(`https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=${apiKey}&query=${city}&maxresults=10&resultType=city`)
+        const result = await response.json()
+        res.send(result)
+    } catch (e) {
+        res.status(404).send({message: 'Возникла ошибка с сервисом autoComplete.'})
+    }
+})
+
 async function start() {
     try {
         app.listen(PORT, () => { console.log(`Server runs on port = ${PORT}...`)})

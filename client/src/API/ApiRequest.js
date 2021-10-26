@@ -10,9 +10,23 @@ export default class ApiRequest {
     }
 
     static async getCoords(city) {
-        const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=227110303242476cae97b6c40e24a8e1`)
+        const response = await fetch('/api/coords', {
+            method: 'POST', 
+            body: JSON.stringify({ city: city }), 
+            headers: { 'Content-Type': 'application/json' }
+        })
         const data = await response.json()
         const [lat, lng] = [data.results[0].geometry.lat, data.results[0].geometry.lng]
         return [lat, lng]
+    }
+
+    static async getSuggestions(city) {
+        const response = await fetch('/api/suggestions', {
+            method: 'POST', 
+            body: JSON.stringify({ city: city }), 
+            headers: { 'Content-Type': 'application/json' }
+        })
+        const result = await response.json()
+        return result
     }
 }
