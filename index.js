@@ -21,11 +21,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.post('/api/data', async (req, res) => {
-    const apiKey = config.get('apiKey2')
-    const {city} = req.body
-    const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&lang=ru`)
-    const result = await response.json()
-    res.send(result)
+    const apiKey = config.get('apiKeyWeatherApi')
+    const {lat, lng} = req.body
+    try {
+        const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lng}&lang=ru`)
+        const result = await response.json()
+        res.send(result)
+    } catch (e) {
+        res.status(404).send({message: 'Возникла ошибка с сервисом weatherApi.'})
+    }
 })
 
 async function start() {
