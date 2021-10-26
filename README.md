@@ -2,7 +2,7 @@
 
 To run application, <b>clone git</b> and <b>npm run dev</b>.
 
-API Key is stored on backend. Add your own in <b>${apiKey}</b> in post request to work.
+API Key is stored on backend. Add your own in <b>${apiKey}</b> in post requests to work.
 
 List of API used: 
 1. WeatherApi. https://weatherapi.com
