@@ -48,7 +48,7 @@ app.post('/api/suggestions', async (req, res) => {
     const apiKey = config.get('apiKeyAutosuggest')
     const {city} = req.body
     try {
-        const response = await fetch(`https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=${apiKey}&query=${city}&maxresults=10&resultType=city`)
+        const response = await fetch(`https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=${apiKey}&query=${city}&maxresults=10&resultType=city&language=ru`)
         const result = await response.json()
         res.send(result)
     } catch (e) {
